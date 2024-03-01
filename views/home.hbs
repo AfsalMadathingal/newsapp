@@ -24,7 +24,7 @@
                                 <div class="header-info-left">
                                     <ul>     
                                         <li><img src="/assets/img/icon/header_icon1.png" alt="">34ºc, Sunny </li>
-                                        <li><img src="/assets/img/icon/header_icon1.png" alt="">Tuesday, 18th June, 2019</li>
+                                        <li id="date"><img src="/assets/img/icon/header_icon1.png" alt="">Tuesday, 18th June, 2019</li>
                                     </ul>
                                 </div>
                                 <div class="header-info-right">
@@ -394,3 +394,10 @@
 		<!-- Jquery Plugins, main Jquery -->	
         <script src=".//assets/js/plugins.js"></script>
         <script src=".//assets/js/main.js"></script>
+
+
+        <script>
+           let  date = new Date()
+
+           const dateField = document.getElementById('date').innerText = date
+        </script>
