@@ -37,7 +37,7 @@ route.get('/', async (req, res) => {
       return  res.render('home',
         {
             data:data.news,
-            items:items
+           // items:items
             
         })
         
@@ -54,7 +54,7 @@ route.get('/', async (req, res) => {
     res.render('home',
        {
            data:data.news,
-           items:items
+           //items:items
            
        })
    }
