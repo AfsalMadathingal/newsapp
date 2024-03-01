@@ -14,8 +14,10 @@ route.get('/', async (req, res) => {
 
    const response=  await  newsDB.find({date:formattedDate})
 
-  const youtbeResponse = await getYouTubeResponse('kerala latest news');
+    const youtbeResponse = await getYouTubeResponse('kerala latest news');
 
+    console.log("youtbeResponse",youtbeResponse);
+    
    const items = youtbeResponse.items.slice(0, 5);
 
    console.log("items",items);
@@ -104,7 +106,8 @@ async function getYouTubeResponse(query) {
       return response.data;
     } catch (error) {
       // Handle API errors, network errors, or other exceptions
-      console.error('Error fetching YouTube data:', error);
+      return error
+     
       // You might want to retry the request after a delay or throw an error
     }
   }
