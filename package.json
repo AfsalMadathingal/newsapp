@@ -1,0 +1,24 @@
+{
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.18.3",
+    "hbs": "^4.2.0",
+    "mongoose": "^8.2.0",
+    "nodemon": "^3.1.0",
+    "request": "^2.88.2"
+  },
+  "name": "newsnow",
+  "version": "1.0.0",
+  "description": "this app will get you the lattest new ",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "news",
+    "app"
+  ],
+  "author": "afsal madathingal",
+  "license": "ISC"
+}
