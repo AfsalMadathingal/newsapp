@@ -1,6 +1,7 @@
 const route = require('express').Router();
 const newsDB = require('../model/newsModel')
 const getNews= require('../utils/googleNews.js')
+const axios = require('axios')
 
 
 route.get('/', async (req, res) => {
@@ -13,7 +14,11 @@ route.get('/', async (req, res) => {
 
    const response=  await  newsDB.find({date:formattedDate})
 
-   console.log(response.length);
+  const youtbeResponse = await getYouTubeResponse('kerala latest news');
+
+   const items = youtbeResponse.items.slice(0, 5);
+
+   console.log("items",items);
 
    if (!response.length) {
 
@@ -23,10 +28,14 @@ route.get('/', async (req, res) => {
 
     await newsDB.insertMany(data)
 
-        
+
+    
+
+    
       return  res.render('home',
         {
-            data:data.news
+            data:data.news,
+            items:items
             
         })
         
@@ -36,11 +45,14 @@ route.get('/', async (req, res) => {
 
     const data = await newsDB.findOne({date:formattedDate})
  
-   
+
+
+  
    
     res.render('home',
        {
-           data:data.news
+           data:data.news,
+           items:items
            
        })
    }
@@ -74,6 +86,29 @@ route.get('/details', async (req, res) => {
 })
 
 
+// Assuming you have a function to securely retrieve the API key
+async function getYouTubeResponse(query) {
+    
+    try {
+      const response = await axios.get(`https://www.googleapis.com/youtube/v3/search`, {
+        params: {
+          part: 'snippet',
+          maxResults: 10,
+          q: query,
+          type: 'video',
+          key: process.env.YOUTUBE_KEY,
+        },
+      });
+  
+      // Handle successful response here
+      return response.data;
+    } catch (error) {
+      // Handle API errors, network errors, or other exceptions
+      console.error('Error fetching YouTube data:', error);
+      // You might want to retry the request after a delay or throw an error
+    }
+  }
+  
 
 
 
