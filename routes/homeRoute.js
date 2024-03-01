@@ -88,7 +88,7 @@ route.get('/details', async (req, res) => {
 })
 
 
-// Assuming you have a function to securely retrieve the API key
+
 async function getYouTubeResponse(query) {
     
     try {
@@ -102,13 +102,13 @@ async function getYouTubeResponse(query) {
         },
       });
   
-      // Handle successful response here
+     
       return response.data;
     } catch (error) {
-      // Handle API errors, network errors, or other exceptions
+      
       return error
      
-      // You might want to retry the request after a delay or throw an error
+     
     }
   }
   
