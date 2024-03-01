@@ -20,7 +20,7 @@ const options = {
     'X-RapidAPI-Host': 'newsnow.p.rapidapi.com'
   },
   body: {
-    query: 'kerala',
+    query: 'kerala news',
     time_bounded: true,
     from_date: formattedDate,
     to_date: formattedDate,

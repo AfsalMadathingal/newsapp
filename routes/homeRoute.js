@@ -14,13 +14,13 @@ route.get('/', async (req, res) => {
 
    const response=  await  newsDB.find({date:formattedDate})
 
-    const youtbeResponse = await getYouTubeResponse('kerala latest news');
+//     const youtbeResponse = await getYouTubeResponse('kerala latest news');
 
-    console.log("youtbeResponse",youtbeResponse);
-    
-   const items = youtbeResponse.items.slice(0, 5);
+//     console.log("youtbeResponse",youtbeResponse);
 
-   console.log("items",items);
+//    const items = youtbeResponse.items.slice(0, 5);
+
+//    console.log("items",items);
 
    if (!response.length) {
 
