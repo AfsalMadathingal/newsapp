@@ -13,15 +13,13 @@ route.get('/', async (req, res) => {
 
    const response=  await  newsDB.find({date:formattedDate})
 
+   console.log(response.length);
 
-   if (response.length === 0) {
+   if (!response.length) {
 
      getNews(async (data)=>{
 
-
-        console.log("data",data);
-
-        data.date = formattedDate
+    data.date = formattedDate
 
     await newsDB.insertMany(data)
 
