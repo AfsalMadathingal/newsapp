@@ -223,9 +223,9 @@
             <div class="row">
                 <div class="col-12">
                     <div class="video-items-active">
-                        {{#each items}}
+                        {{#each youtube}}
                         <div class="video-items text-center">
-                            <iframe src="https://www.youtube.com/embed/{{this.id.videoId}}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            <iframe src="{{this.embed_url}}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                         </div>
                         {{/each}}
                     </div>
@@ -246,9 +246,9 @@
                     </div>
                     <div class="col-lg-6">
                         <div class="testmonial-nav text-center">
-                            {{#each items}}
+                            {{#each youtube}}
                             <div class="single-video">
-                                <iframe  src="https://www.youtube.com/embed/{{this.is.videoId}}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                               <iframe  src="{{this.embed_url}}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                                 <div class="video-intro">
                                     <h4>{{this.snippet.title}}</h4>
                                 </div>

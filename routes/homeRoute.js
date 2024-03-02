@@ -1,4 +1,5 @@
 const route = require('express').Router();
+const request = require('request');
 const newsDB = require('../model/newsModel')
 const getNews= require('../utils/googleNews.js')
 const axios = require('axios')
@@ -13,14 +14,17 @@ route.get('/', async (req, res) => {
     let formattedDate = `${day}/${month}/${year}`;
 
    const response=  await  newsDB.find({date:formattedDate})
+   let youtubeResponse;
 
-//     const youtbeResponse = await getYouTubeResponse('kerala latest news');
+   try {
+       youtubeResponse = await getYouTubeResponse();
+       console.log("YouTube Response:", youtubeResponse);
+   } catch (error) {
+       console.error("Error fetching YouTube response:", error);
+   }
 
-//     console.log("youtbeResponse",youtbeResponse);
 
-//    const items = youtbeResponse.items.slice(0, 5);
-
-//    console.log("items",items);
+  
 
    if (!response.length) {
 
@@ -37,7 +41,7 @@ route.get('/', async (req, res) => {
       return  res.render('home',
         {
             data:data.news,
-           // items:items
+            youtube:youtubeResponse.result
             
         })
         
@@ -54,7 +58,7 @@ route.get('/', async (req, res) => {
     res.render('home',
        {
            data:data.news,
-           //items:items
+           youtube:youtubeResponse.result
            
        })
    }
@@ -70,8 +74,15 @@ route.get('/', async (req, res) => {
 
 route.get('/details', async (req, res) => {
 
+    let date = new Date();
+    let day = date.getDate().toString().padStart(2, '0');
+    let month = (date.getMonth() + 1).toString().padStart(2, '0');
+    let year = date.getFullYear().toString().slice(2);
+    let formattedDate = `${day}/${month}/${year}`;
+
     const url = req.query.news
-    const data = await newsDB.findOne({})
+
+    const data = await newsDB.findOne({date:formattedDate})
     let news
     data.news.forEach(element => {
         if (element.url === url) {
@@ -88,30 +99,39 @@ route.get('/details', async (req, res) => {
 })
 
 
+const getYouTubeResponse = () => {
+  return new Promise((resolve, reject) => {
+      const options = {
+          method: 'POST',
+          url: 'https://google-api31.p.rapidapi.com/videosearch',
+          headers: {
+              'content-type': 'application/json',
+              'X-RapidAPI-Key': process.env.YOUTUBE_KEY,
+              'X-RapidAPI-Host': 'google-api31.p.rapidapi.com'
+          },
+          body: {
+              text: "kerala news today",
+              safesearch: 'off',
+              timelimit: '',
+              duration: '',
+              resolution: '',
+              region: 'IN',
+              max_results: 20
+          },
+          json: true
+      };
 
-async function getYouTubeResponse(query) {
-    
-    try {
-      const response = await axios.get(`https://www.googleapis.com/youtube/v3/search`, {
-        params: {
-          part: 'snippet',
-          maxResults: 10,
-          q: query,
-          type: 'video',
-          key: process.env.YOUTUBE_KEY,
-        },
+      request(options, (error, response, body) => {
+          if (error) {
+              reject(error);
+          } else {
+              resolve(body);
+          }
       });
-  
-     
-      return response.data;
-    } catch (error) {
-      
-      return error
-     
-     
-    }
-  }
-  
+  });
+};
+
+
 
 
 
