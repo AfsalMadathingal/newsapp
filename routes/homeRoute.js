@@ -18,7 +18,7 @@ route.get('/', async (req, res) => {
 
    try {
        youtubeResponse = await getYouTubeResponse();
-       console.log("YouTube Response:", youtubeResponse);
+      
    } catch (error) {
        console.error("Error fetching YouTube response:", error);
    }
