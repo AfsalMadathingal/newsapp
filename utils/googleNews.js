@@ -12,7 +12,7 @@ const options = {
   },
   body: {
     language: 'en',
-    site: 'https://www.onmanorama.com/',
+    site: 'https://english.mathrubhumi.com/',
     page: 1
   },
   json: true

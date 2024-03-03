@@ -24,6 +24,7 @@ route.get('/', async (req, res) => {
    }
 
 
+   console.log(youtubeResponse);
   
 
    if (!response.length) {
@@ -35,7 +36,7 @@ route.get('/', async (req, res) => {
     await newsDB.insertMany(data)
 
 
-    
+    console.log(data);
 
     
       return  res.render('home',
@@ -49,18 +50,20 @@ route.get('/', async (req, res) => {
 
    }else{
 
-    const data = await newsDB.findOne({date:formattedDate})
+   
  
 
+    const response=  await  newsDB.findOne({date:formattedDate})
 
-  
    
     res.render('home',
        {
-           data:data.news,
+           data:response.news,
            youtube:youtubeResponse.result
            
        })
+
+
    }
 
 
