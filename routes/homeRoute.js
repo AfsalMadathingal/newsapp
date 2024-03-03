@@ -2,6 +2,7 @@ const route = require('express').Router();
 const request = require('request');
 const newsDB = require('../model/newsModel')
 const getNews= require('../utils/googleNews.js')
+const YoutubeDB= require('../model/youtubeSearch')
 const axios = require('axios')
 
 
@@ -14,18 +15,29 @@ route.get('/', async (req, res) => {
     let formattedDate = `${day}/${month}/${year}`;
 
    const response=  await  newsDB.find({date:formattedDate})
-   let youtubeResponse;
+   let youtubeResponse  = await YoutubeDB.findOne({date:formattedDate})
 
-   try {
-       youtubeResponse = await getYouTubeResponse();
-      
-   } catch (error) {
-       console.error("Error fetching YouTube response:", error);
+   
+
+   if (!youtubeResponse) {
+
+    console.log("inside if");
+
+    try {
+        youtubeResponse = await getYouTubeResponse();
+        youtubeResponse.date= formattedDate
+        await YoutubeDB.insertMany(youtubeResponse)
+       
+    } catch (error) {
+
+        console.error("Error fetching YouTube response:", error);
+    }
+ 
    }
 
-
-   console.log(youtubeResponse);
+   youtubeResponse  = await YoutubeDB.findOne({date:formattedDate})
   
+
 
    if (!response.length) {
 
@@ -35,8 +47,6 @@ route.get('/', async (req, res) => {
 
     await newsDB.insertMany(data)
 
-
-    console.log(data);
 
     
       return  res.render('home',
@@ -52,6 +62,7 @@ route.get('/', async (req, res) => {
 
    
  
+
 
     const response=  await  newsDB.findOne({date:formattedDate})
 
