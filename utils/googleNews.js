@@ -39,6 +39,8 @@ const getNews =  function  (callback) {
           
           return  callback(error)
         } 
+
+        console.log(body);
       
       
         callback(body)
