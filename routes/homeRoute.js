@@ -45,6 +45,11 @@ route.get('/', async (req, res) => {
 
     data.date = formattedDate
 
+    if(data.news.length == 0)
+    {
+       return res.redirect('/')
+    }
+
     await newsDB.insertMany(data)
 
 
